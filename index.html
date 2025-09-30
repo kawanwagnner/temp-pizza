@@ -739,48 +739,40 @@
           <div class="col-md-10">
             <div class="row">
               <div
-                class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate"
+                class="col-md-6 col-lg-3 mx-auto d-flex justify-content-center counter-wrap ftco-animate"
               >
                 <div class="block-18 text-center">
                   <div class="text">
                     <div class="icon">
                       <span class="flaticon-pizza-1"></span>
                     </div>
-                    <strong class="number" data-number="100">0</strong>
-                    <span>Filiais de Pizza</span>
+                    <strong class="text-white">+ </strong
+                    ><strong class="number" data-number="350">0</strong>
+                    <span>Pizzas Preparadas</span>
                   </div>
                 </div>
               </div>
               <div
-                class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate"
-              >
-                <div class="block-18 text-center">
-                  <div class="text">
-                    <div class="icon"><span class="flaticon-medal"></span></div>
-                    <strong class="number" data-number="85">0</strong>
-                    <span>Número de Prêmios</span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate"
+                class="col-md-6 col-lg-3 mx-auto d-flex justify-content-center counter-wrap ftco-animate"
               >
                 <div class="block-18 text-center">
                   <div class="text">
                     <div class="icon"><span class="flaticon-laugh"></span></div>
-                    <strong class="number" data-number="10567">0</strong>
-                    <span>Clientes Felizes</span>
+                    <strong class="text-white">+ </strong
+                    ><strong class="number" data-number="3567">0</strong>
+                    <span>Clientes Atendidos</span>
                   </div>
                 </div>
               </div>
               <div
-                class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate"
+                class="col-md-6 col-lg-3 mx-auto d-flex justify-content-center counter-wrap ftco-animate"
               >
                 <div class="block-18 text-center">
                   <div class="text">
                     <div class="icon"><span class="flaticon-chef"></span></div>
-                    <strong class="number" data-number="900">0</strong>
-                    <span>Funcionários</span>
+                    <strong class="text-white">+ </strong
+                    ><strong class="number" data-number="25">0</strong>
+                    <span>Opções de Pizzas</span>
                   </div>
                 </div>
               </div>
@@ -1207,40 +1199,54 @@
           </div>
           <div class="col-md-6 appointment ftco-animate">
             <h3 class="mb-3">Entre em Contato</h3>
-            <form action="#" class="appointment-form">
+            <form onsubmit="sendToWhatsApp(event)" class="appointment-form">
               <div class="d-md-flex">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Nome" />
+                  <input
+                    type="text"
+                    id="nome"
+                    class="form-control"
+                    placeholder="Nome"
+                    required
+                  />
                 </div>
               </div>
               <div class="d-me-flex">
                 <div class="form-group">
                   <input
                     type="text"
+                    id="celular"
                     class="form-control"
                     placeholder="Celular"
+                    required
                   />
                 </div>
               </div>
               <div class="d-me-flex">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Email" />
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Email"
+                    required
+                  />
                 </div>
               </div>
               <div class="form-group">
                 <textarea
-                  name=""
-                  id=""
+                  id="mensagem"
                   cols="30"
                   rows="3"
                   class="form-control"
                   placeholder="Mensagem"
+                  required
                 ></textarea>
               </div>
               <div class="form-group">
                 <input
                   type="submit"
-                  value="Enviar"
+                  value="Enviar via WhatsApp"
                   class="btn btn-primary py-3 px-4"
                 />
               </div>
@@ -1379,5 +1385,47 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="js/google-map.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+      function sendToWhatsApp(event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+
+        // Captura os valores dos campos
+        const nome = document.getElementById("nome").value;
+        const celular = document.getElementById("celular").value;
+        const email = document.getElementById("email").value;
+        const mensagem = document.getElementById("mensagem").value;
+
+        // Monta a mensagem formatada para WhatsApp
+        const mensagemWhatsApp = `🍕 *CONTATO - PIZZA RESTAURANT*
+
+👤 *Nome:* ${nome}
+📱 *Celular:* ${celular}  
+📧 *Email:* ${email}
+
+💬 *Mensagem:*
+${mensagem}
+
+_Enviado através do site da pizzaria_`;
+
+        // Codifica a mensagem para URL
+        const mensagemCodificada = encodeURIComponent(mensagemWhatsApp);
+
+        // Número do WhatsApp (mesmo número já usado no site)
+        const numeroWhatsApp = "5511939060203";
+
+        // Monta a URL do WhatsApp
+        const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
+
+        // Abre o WhatsApp em nova aba
+        window.open(urlWhatsApp, "_blank");
+
+        // Limpa o formulário após envio
+        document.querySelector(".appointment-form").reset();
+
+        // Opcional: Mostra confirmação
+        alert("Redirecionando para o WhatsApp...");
+      }
+    </script>
   </body>
 </html>
